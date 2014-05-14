@@ -8,7 +8,8 @@ module OpenMeteoClient
       :base_url => 'http://api.ometfn.net/0.1/forecast',
       :domain => 'eu12',
       :results_type => 'full',
-      :results_format => 'json'
+      :results_format => 'json',
+      :relevant_attributes => nil
   }
 
   @valid_config_keys = @config.keys
@@ -23,9 +24,9 @@ module OpenMeteoClient
     @config
   end
 
-  def full_data(relevant_attributes)
-    response = OpenMeteoResponse.new(relevant_attributes)
-    forecasts_query = "#{@config[:base_url]}/#{@config[:domain]}/#{@latitude},#{@longitude}/#{@config[:results_type]}.#{@config[:results_format]}"
+  def forecasts(latitude, longitude)
+    response = OpenMeteoResponse.new(@config[:relevant_attributes])
+    forecasts_query = "#{@config[:base_url]}/#{@config[:domain]}/#{latitude},#{longitude}/#{@config[:results_type]}.#{@config[:results_format]}"
     @logger.info "Forecasts query : #{forecasts_query}"
     open(forecasts_query) { |f|
         f.each_line {|line| response.append_line(line)}
