@@ -62,7 +62,7 @@ class OpenMeteoResponseTest < Test::Unit::TestCase
 
   should 'return a list of forecasts' do
 
-    forecasts = @response.as_forecasts
+    forecasts = @response.as_list
 
     assert_equal 3, forecasts.length
     assert_equal [1399852800,1399856400,1399860000], forecasts.collect {|f| f[:times]}

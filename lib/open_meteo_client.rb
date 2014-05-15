@@ -1,7 +1,10 @@
 require 'open_meteo_client/version'
+require 'open_meteo_client/open_meteo_response'
 require 'open-uri'
 
 module OpenMeteoClient
+
+  DEFAULT_ATTRIBUTES = [:times, :temp, :rh, :low_clouds, :medium_clouds, :high_clouds, :precipitations]
 
   # Configuration defaults
   @config = {
@@ -9,7 +12,7 @@ module OpenMeteoClient
       :domain => 'eu12',
       :results_type => 'full',
       :results_format => 'json',
-      :relevant_attributes => nil
+      :relevant_attributes => DEFAULT_ATTRIBUTES
   }
 
   @valid_config_keys = @config.keys
@@ -24,7 +27,7 @@ module OpenMeteoClient
     @config
   end
 
-  def forecasts(latitude, longitude)
+  def self.forecasts(latitude, longitude)
     response = OpenMeteoResponse.new(@config[:relevant_attributes])
     forecasts_query = "#{@config[:base_url]}/#{@config[:domain]}/#{latitude},#{longitude}/#{@config[:results_type]}.#{@config[:results_format]}"
     @logger.info "Forecasts query : #{forecasts_query}"

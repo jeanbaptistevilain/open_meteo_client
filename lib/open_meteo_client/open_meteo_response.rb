@@ -1,11 +1,8 @@
 require 'json'
-require 'open_meteo_client/forecast'
 
 class OpenMeteoResponse
 
-  DEFAULT_ATTRIBUTES = [:times, :temp, :rh, :low_clouds, :medium_clouds, :high_clouds, :precipitations]
-
-  def initialize(relevant_attributes = DEFAULT_ATTRIBUTES)
+  def initialize(relevant_attributes)
     @json_response = ''
     @relevant_attributes = relevant_attributes
   end
@@ -23,7 +20,7 @@ class OpenMeteoResponse
     @json_response
   end
 
-  def as_forecasts
+  def as_list
     response_hash = as_hash
     forecasts = []
 
