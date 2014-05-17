@@ -1,6 +1,7 @@
 require 'open_meteo_client/version'
 require 'open_meteo_client/open_meteo_response'
 require 'open-uri'
+require 'logger'
 
 module OpenMeteoClient
 
